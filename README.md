@@ -23,3 +23,16 @@ Run `vagrant up` to:
 - creates an ``upstart`` job for it
 
 Registry will be available on port ``5000`` of this VM.
+
+mesos-docker
+------------
+
+Run `make-box.sh` to:
+
+- set up ``ubuntu1310-docker`` VM
+
+- download and install ``Zookeeper``, ``Mesos``, and ``Python`` extensions
+
+- install ``mesos-docker`` executor to ``/usr/loca/libexec/mesos/mesos-docker``
+
+- create base ``ubunto1310-mesos.box``
