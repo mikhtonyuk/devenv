@@ -36,3 +36,20 @@ Run `make-box.sh` to:
 - install ``mesos-docker`` executor to ``/usr/loca/libexec/mesos/mesos-docker``
 
 - create base ``ubunto1310-mesos.box``
+
+mesos-master
+------------
+
+Run `vagrant up` to:
+
+- set up ``ubuntu1310-mesos`` VM
+
+- download and install ``Marathon`` and ``Chronos`` frameworks
+
+- configure ``upstart`` jobs
+
+``Mesos`` master web UI will be available on port 5050 of the VM
+
+``Marathon`` web UI will be available on port 5051 of the VM
+
+``Chronos`` web UI will be available on port 5052 of the VM
