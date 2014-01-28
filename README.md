@@ -3,6 +3,8 @@ Collection of Vagrant bootstraps.
 docker
 ------
 
+Vagrant base box with ``lxc-docker`` package installed.
+
 Run `make-box.sh` to:
 
 - download base VM - ``Ubuntu 13.10``
@@ -14,18 +16,22 @@ Run `make-box.sh` to:
 docker-registry
 ---------------
 
+Private ``Docker`` registry to be able to push and pull images internally.
+
 Run `vagrant up` to:
 
 - download base VM - ``Ubuntu 13.10``
 
 - download and build ``docker-registry``
 
-- creates an ``upstart`` job for it
+- create an ``upstart`` job for it
 
 Registry will be available on port ``5000`` of this VM.
 
 mesos-docker
 ------------
+
+Vagrant base box for running ``Mesos`` cluster OS with ``Docker`` support.
 
 Run `make-box.sh` to:
 
@@ -39,6 +45,8 @@ Run `make-box.sh` to:
 
 mesos-master
 ------------
+
+Sets up ``Mesos`` master node.
 
 Run `vagrant up` to:
 
