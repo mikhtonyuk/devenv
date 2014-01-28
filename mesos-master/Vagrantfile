@@ -11,8 +11,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network :public_network, :bridge => "en0: Wi-Fi (AirPort)"
 
-  config.vm.provider "virtualbox" do |v|
-    v.memory = 1024
-  end
-
 end

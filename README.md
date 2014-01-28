@@ -53,3 +53,16 @@ Run `vagrant up` to:
 ``Marathon`` web UI will be available on port 5051 of the VM
 
 ``Chronos`` web UI will be available on port 5052 of the VM
+
+mesos-cluster
+-------------
+
+Brings up ``Mesos`` cluster:
+
+- Node ``docker-reg`` has ``docker-registry`` running on port 5000
+
+- Node ``mesos-master`` has ``mesos`` (5050), ``marathon`` (5051), and ``chronos`` (5052) running
+
+- Nodes ``slave-1`` and ``slave-2`` have ``mesos-slave`` running connected to master node
+
+Make sure to install ``Vagrant Hostmanager`` plugin with `vagrant plugin install vagrant-hostmanager` so that VMs and host machine can use hostnames to referr to nodes. This is required for mesos to work properly.

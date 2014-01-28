@@ -1,0 +1,61 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.ignore_private_ip = false
+  config.hostmanager.include_offline = false
+
+  config.vm.define "mesos-master" do |mm|
+    mm.vm.provider "virtualbox" do |v| v.memory = 700 end
+  	mm.vm.box = "ubuntu1310-mesos"
+    mm.vm.hostname = "mesos-master"
+    mm.vm.network :private_network, ip: '192.168.1.100'
+
+    mm.vm.provision :shell, inline: "sed -i '/127.0.1.1/d' /etc/hosts"
+    mm.vm.provision :hostmanager
+    mm.vm.provision :shell, :path => "../mesos-master/bootstrap-mesos-master.sh"
+  end
+
+  config.vm.define "docker-reg" do |dr|
+    dr.vm.provider "virtualbox" do |v| v.memory = 300 end
+    dr.vm.box = "ubuntu1310"
+    dr.vm.hostname = "docker-reg"
+    dr.vm.network :private_network, ip: '192.168.1.101'
+
+    dr.vm.provision :shell, inline: "sed -i '/127.0.1.1/d' /etc/hosts"
+    dr.vm.provision :hostmanager
+    dr.vm.provision :shell, :path => "../docker-registry/bootstrap-registry.sh"
+  end
+
+  config.vm.define "slave-1" do |s1|
+    s1.vm.provider "virtualbox" do |v| v.memory = 300 end
+  	s1.vm.box = "ubuntu1310-mesos"
+    s1.vm.hostname = "slave-1"
+    s1.vm.network :private_network, ip: '192.168.1.151'
+
+    s1.vm.provision :shell, inline: "sed -i '/127.0.1.1/d' /etc/hosts"
+    s1.vm.provision :hostmanager
+    s1.vm.provision :shell, inline: "echo 'zk://mesos-master:2181/mesos' > /etc/mesos/zk"
+    s1.vm.provision :shell, inline: "echo 'IP=192.168.1.151' >> /etc/default/mesos-slave"
+    s1.vm.provision :shell, inline: "start mesos-slave"
+  end
+
+  config.vm.define "slave-2" do |s2|
+    s2.vm.provider "virtualbox" do |v| v.memory = 300 end
+    s2.vm.box = "ubuntu1310-mesos"
+    s2.vm.hostname = "slave-2"
+    s2.vm.network :private_network, ip: '192.168.1.152'
+
+    s2.vm.provision :shell, inline: "sed -i '/127.0.1.1/d' /etc/hosts"
+    s2.vm.provision :hostmanager
+    s2.vm.provision :shell, inline: "echo 'zk://mesos-master:2181/mesos' > /etc/mesos/zk"
+    s2.vm.provision :shell, inline: "echo 'IP=192.168.1.152' >> /etc/default/mesos-slave"
+    s2.vm.provision :shell, inline: "start mesos-slave"
+  end
+
+end
